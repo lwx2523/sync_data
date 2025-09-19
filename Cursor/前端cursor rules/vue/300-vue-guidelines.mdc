@@ -1,0 +1,44 @@
+---
+description: vue 的版本和状态管理，以及性能优化
+globs: *.vue
+alwaysApply: false
+---
+
+# Vue 开发指南
+
+## Vue 版本
+- 3.5.12
+
+## Vue 3 与组合式 API 最佳实践
+- 使用<script setup>语法进行简洁的组件定义。
+- 利用ref、reactive和computed进行响应式状态管理。
+- 在适当的情况下，使用provide/inject进行依赖注入。
+- 为可复用逻辑实现自定义组合组件。
+
+## script 代码顺序规范
+script 中代码，严格按照如下的顺序
+1. import 相关的库或者组件，必须写在最前面
+2. defineOptions
+3. interface 相关类型定义
+4. Define props
+5。Define emits
+6. 变量定义，如果是处理同一块业务的变量，则写在一起，其他业务变量需要空一行
+7. 业务方法，统一使用 es6 箭头函数写法，不要使用 function，方法必须有JSDoc风格的注释，另外，复杂逻辑需要添加行内注释
+8. watch 监听相关的方法定义
+9. onMounted、onUnmounted 方法的定义
+10. defineExpose 方法
+11. 其他相关代码
+
+
+## 状态管理
+- 全局状态必须使用 Pinia store 管理
+- 使用 computed 属性获取派生状态，避免方法调用
+- Store 中的 action 必须使用 async/await 处理异步
+- 组件中优先使用 props/emit，避免滥用全局状态
+
+## 性能优化
+- 合理使用 computed
+- v-show vs v-if
+- 在异步组件中使用 Suspense。
+- 为路由和组件实现延迟 loading 加载效果。
+

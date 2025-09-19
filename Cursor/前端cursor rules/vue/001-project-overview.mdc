@@ -1,0 +1,70 @@
+---
+alwaysApply: true
+---
+
+# 项目概览
+这是一个基于 Vue3 + TypeScript + Vite 前端项目，安装依赖时，必须使用 pnpm 安装，不要使用 npm.
+
+## 技术栈
+技术栈为 vue 的版本为 3.5.12，UI 框架为 Element Plus 2.9.1
+- 框架: Vue 3.5.1 版本 (Composition API)
+- 构建工具: Vite 5.1.4
+- 语言: TypeScript 5.3.3
+- UI框架: Element Plus 2.9.1
+- 状态管理: Pinia 2.1.7 (Vue3 官方推荐)
+- 路由: Vue Router 4.4.5
+- HTTP库: Axios 1.6.8
+- 样式: SCSS + UnoCSS
+- 包管理: pnpm
+
+
+## 目录架构
+.
+├── docker/                      # Docker配置
+├── public/                      # 静态资源
+├── src/                         # 源码目录
+│   ├── api/                     # API接口层
+│   │   ├── agent/               # 代理相关接口
+│   │   ├── doc/                 # 文档相关接口
+│   │   ├── infra/               # 基础设施接口
+│   │   ├── login/               # 登录认证接口
+│   │   └── system/              # 系统管理接口
+│   ├── components/              # 通用组件库
+│   │   ├── DocViewer/           # 文档查看器
+│   │   ├── PdfViewer/           # PDF查看器
+│   │   ├── Form/                # 表单组件
+│   │   ├── Table/               # 表格组件
+│   │   └── ...                  # 其他通用组件
+│   ├── views/                   # 页面组件
+│   │   ├── bidding-manage/      # 招标管理
+│   │   ├── bidding-org/         # 招标机构
+│   │   ├── bidding-production/  # 招标生产
+│   │   ├── doc/                 # 文档管理
+│   │   ├── manage-doc/          # 文档管理
+│   │   └── ...
+│   ├── store/                   # 状态管理
+│   ├── router/                  # 路由配置
+│   ├── utils/                   # 工具函数
+│   ├── hooks/                   # 组合式函数
+│   ├── layout/                  # 布局组件
+│   ├── plugins/                 # 插件配置
+│   └── styles/                  # 样式文件
+├── types/                       # typescript 类型定义配置
+├── .env/                        # 项目相关环境的配置，如：dev、local、prod等
+├── vite.config.ts/              # vite 配置文件
+└── package.json/                # package.json
+
+
+### 目录结构说明
+对部分目录进行详细说明，如下：
+- `src/api/` - api 服务调用
+- `src/components/` - 所有公共组件，按功能分子目录
+- `src/views/` - 页面组件，会根据目录，自动生成路由，如果需要菜单，则同时在 `src/router/modules/remaining.ts`配置对应的菜单
+- `src/utils/` - 工具函数，纯函数，无副作用
+- `src/store/` - 全局状态的管理，如用户信息
+- `src/hooks/` - 自定义 Hooks 函数，封装复用逻辑
+- `src/config/axios` - 请求工具 axios，详细参考 @400-api-standards.mdc
+- `src/router/modules/remaining.ts` - 路由菜单配置
+- `src/types/` - TypeScript类型定义
+- `vite.config.ts` - 相关构建配置
+- `.env.dev、.env.local、.env.prod、.env.stage、.env.test` - 多环境配置

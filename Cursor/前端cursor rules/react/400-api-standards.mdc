@@ -1,0 +1,53 @@
+---
+description: api 请求规范
+globs: *.tsx, *.ts, *.js
+alwaysApply: true
+---
+
+# API设计规范
+
+## RESTful API设计原则
+- 使用名词表示资源，如`/users`而非`/getUsers`
+- 使用HTTP动词表示操作：GET(查询)、POST(创建)、PUT(更新)、DELETE(删除)
+- 使用复数形式命名资源集合，如`/users`而非`/user`
+- 使用嵌套表示资源关系，如`/users/123/orders`
+
+## 请求格式
+- 项目请求统一使用已经封装好的请求工具`src/utils/fetch.ts`
+- GET(查询)、POST(创建)、PUT(更新)、DELETE(删除)等请求，请求参数都使用JSON格式，因为参数在`src/utils/fetch.ts`工具都做了统一的转化处理
+- 支持的内容类型仅为`application/json`
+
+## 响应格式
+```json
+{
+  "errCode": 0, // 请求编码，0: 表示请求接口正常，-1: 表示请求接口异常
+  "errMsg": "请求成功", // 请求返回的文本信息
+  "success": true, // true：接口请求成功，false：接口请求失败或者异常
+  "data": {}, // 响应主体数据
+}
+```
+
+## 代码示例
+
+```typescript
+import { get, post } from '@/utils/fetch';
+
+type paramType = {
+  id: string;
+  name: string;
+}
+
+/** 接口名称
+ * @param {string} id -所属省份信息的id
+ * @param {string} name -所属省份名称
+ */
+export const testPost = (param?: paramType) => post('/v1/queryUserList', param);
+
+
+/** 接口名称
+ * @param {string} id -所属省份信息的id
+ * @param {string} name -所属省份名称
+ */
+export const testGet = (param?: paramType) => get('/v1/queryUserList', param);
+
+```

@@ -1,0 +1,28 @@
+---
+description:  React 的版本和状态管理，以及性能优化
+globs: src/**/*.tsx,src/**/*.jsx
+alwaysApply: false
+---
+
+# React 开发指南
+
+## React 版本
+- 18.3.1
+
+## React 组件规范
+- 使用函数组件和 Hooks，避免使用 Class 组件
+- 小型 UI 元素使用无状态组件
+- 复杂逻辑使用自定义 Hooks 抽象
+- 组件文件名与组件名一致，使用 PascalCase
+
+## 状态管理
+- 局部状态使用 useState
+- 全局状态使用 umi 框架提供的 models 统一状态处理
+- 避免过度使用全局状态
+- 复杂异步流程使用 React Query
+
+## 性能优化
+- 使用 React.memo() 包装纯展示组件
+- 使用 useCallback()和 useMemo() 优化性能
+- 大型列表使用虚拟滚动（react-window）
+- 使用 React.lazy() 和 Suspense 实现代码分割

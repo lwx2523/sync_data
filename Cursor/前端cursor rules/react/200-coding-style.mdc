@@ -1,0 +1,73 @@
+---
+alwaysApply: true
+---
+
+## 编码风格规范
+- 编写简洁、技术性强的TypeScript代码，并提供准确的示例。
+- 相较于代码复制，更倾向于迭代和模块化。
+- 使用带有助动词的描述性变量名（例如，isLoading、hasError）。
+- 使用函数式组件，避免使用 class 组件
+
+## 通用规范
+- 使用 2 空格缩进
+- 行宽不超过 100 字符
+- 文件末尾保留一个空行
+- 使用分号结束语句
+- 每个方法都必须有相关的注释方法说明
+
+## 命名约定
+- 变量和函数使用 camelCase 命名法
+- 类和组件使用 PascalCase 命名法
+- 常量使用 UPPER_SNAKE_CASE 命名法
+- CSS类名使用 kebab-case 命名法
+
+## React 组件规范
+- 使用函数组件和 Hooks，避免使用 Class 组件
+- 小型 UI 元素使用无状态组件
+- 复杂逻辑使用自定义 Hooks 抽象
+- 组件文件名与组件名一致，使用 PascalCase
+
+## 代码生成偏好
+- 优先生成TypeScript代码，严格类型检查
+- 优先使用异步/await而非Promise链
+- 优先使用函数组件而非类组件
+- 优先使用命名导出而非默认导出
+- 优先使用解构赋值提取属性和参数
+
+## 注释规范
+- 每个函数都应有JSDoc风格的注释
+- 复杂逻辑需要添加行内注释
+- 代码块前使用块注释说明其功能
+- TODO和FIXME使用统一格式：// TODO(username): 内容
+
+## src/pages 页面组件规范
+- 目录必须是小写字母，或者以横杠连接的小写字母，如：home、home-log
+- 每个目录下面，必须有 index.tsx 导入文件，页面的入口文件以目录名+Page.tsx 命名，同时页面入口的样式文件为目录名+Page.less 命名；
+- 例如在 src/pages 下面创建一个 home 目录，则需要自动生成 index.tsx、HomePage.tsx、HomePage.less 三个文件，index.tsx 直接导出 HomePage.tsx组件；
+- 例如在 src/pages 下面创建一个 home-log 目录,则需要自动生成 index.tsx、HomeLogPage.tsx、HomeLogPage.less 三个文件,index.tsx 直接导出 HomeLogPage.tsx组件；
+
+## 新增页面或者路由
+1. 直接在 `src/pages` 目录下，添加子目录和文件，遵循 `src/pages 页面组件规范`
+2. 在`src/_config.tsx`中配置新页面组件菜单，具体各个配置如下：
+  2.1 path 必须跟`src`下新建目录的文件夹同名，umi 框架是以目录自动生成路由
+  2.2 code 必须在`src/auth.json`配置相同的 key
+  2.3 如果菜单不需要在系统展示，例如：详情，则hidden 设置为 false
+  2.4 label 使用国际化，如：<FormattedMessage id="菜單.主頁管理" />
+3. 在`src/auth.json`生成与 code 相同的配置
+4. 在`src/locales`生成 label 国际化配置
+
+## 数据流向
+一个完整功能模块，从用户触发对应的事件，到调用 services 接口，以及 UI 重新渲染整个完整过程，数据流向的过程
+1. 用户交互触发组件内事件处理函数
+2. 事件处理函数调用hooks或services
+3. Services进行API调用并处理响应
+4. 数据通过hooks或props返回给组件
+5. 组件根据新数据重新渲染UI
+
+## 国际化
+1. 在`src/locales/`目录下添加新的语言文件
+2. 使用`@umijs/max` 下的`useIntl` hook获取翻译函数，或者使用 `FormattedMessage`组件直接翻译
+3. 使用`const intl = useIntl(); const content = intl.formatMessage({ id: 'welcome' });`方式引用翻译文本
+4. 也可以使用`<FormattedMessage id="welcome" />`方式引用翻译文本
+5. 动态值使用 `intl.formatMessage({ id: 'welcome'}, { "name": "小李" })`方式传入
+6. 动态值也可以使用`<FormattedMessage id="welcome" values={{ name: '张三' }} />`方式传入

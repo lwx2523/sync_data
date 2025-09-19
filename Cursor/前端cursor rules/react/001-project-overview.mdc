@@ -1,0 +1,82 @@
+---
+alwaysApply: true
+---
+
+# 项目概览
+这是一个基于 @umijs/max 4.3.31 + React 18.3.1 + Ant Design 5.21.6 的前端项目，安装依赖时，必须使用 pnpm 安装，不要使用 npm.
+
+
+## 技术栈
+- @umijs/max: 4.3.31
+- React: 18.3.1
+- UI 框架: Ant Design 5.21.6
+- TypeScript: 5.6.3
+- 构建工具: 使用 @umijs/max max CLI 进行构建
+- HTTP库: umi-request 1.4.0
+- 路由: react-router 6.3.0
+- 样式: less 4.2.0
+- @ant-design/pro-components: 版本 2.8.1
+- 包管理: pnpm
+
+
+## 目录架构
+.
+├── .husky                      # 配置Git钩子
+├── mock                        # mock数据
+│   └── app.ts｜tsx
+├── src
+│   ├── .umi                    # umi 框架编译后的文件，永远不要改动，不需要理会该目录
+│   ├── layouts                 # 全局布局目录
+│   │   ├── index.tsx           # 布局布局入口
+│   ├── models                  # 全局状态管理
+│   │   └── global.ts           # 全局状态管理文件，如用户信息
+│   ├── pages                   # 页面容器组件，根据文件名，umi框架自动生成路由
+│   │   ├── home                # home 页面组件
+│   │   │   ├── HomePage.tsx    # home 页面组件的页面逻辑
+│   │   │   ├── HomePage.less   # home 页面组件的样式
+│   │   │   └── index.tsx       # 默认导出 HomePage.tsx 组件
+│   ├── utils                   # 工具类
+│   │   └── fetch.ts            # 项目请求工具
+│   │   └── index.ts            # 常见工具类方法集合
+│   ├── services                # 请求接口相关的API
+│   │   └── api.ts              # API 接口文件
+│   ├── app.ts                  # umi 框架运行时配置
+│   ├── _config.tsx             # 菜单配置文件
+│   ├── auth.json               # 页面、菜单、按钮等权限编码定义
+│   └── global.less             # 全局样式定义
+├── .env                        # 环境变量定义
+├── .eslintrc.js                # 项目 eslint 规范定义文件
+├── .npmrc                      # 项目相关第三方库下载 npm 源配置
+├── .prettierrc                 # prettier 规则配置
+├── .umirc.ts                   # umi 框架配置文件
+├── package.json                # package.json
+├── tsconfig.json               # ts 配置文件
+└── typings.d.ts                # ts 全局变量定义文件
+
+
+### 目录结构说明
+对部分目录进行详细说明，如下：
+- `mock`: mock 数据文件
+- `src/.umi`: umi 框架编译后的文件，永远不要改动，不需要理会该目录
+- `src/components`: 公共组价
+- `src/constants`: 全局常量定义
+- `src/hooks`: 项目 hooks 相关的定义
+- `src/layouts`: 项目 layout 布局，如：菜单、头部导航栏等
+- `src/locales`: 国际化，如：中文配置 zh-CN.ts，英文配置 en-US.ts
+- `src/models`: 全局状态管理
+- `src/pages`: 页面容器组件，根据文件名，umi框架自动生成路由
+- `src/services`: 请求接口相关的API
+- `src/styles`: 全局样式，如：antd 覆盖的样式，需要导入到 src/global.less 中
+- `src/utils`: 项目工具类
+- `src/utils/fetch.ts`: 项目请求工具封装，详细参考 @400-api-standards.mdc
+- `src/_config.tsx`: 菜单配置文件
+- `src/app.ts`: umi 框架运行时配置
+- `src/auth.json`: 页面、菜单、按钮等权限编码定义
+- `src/global.less`: 全局样式定义
+- `.env`: 环境变量定义
+- `.npmrc`: 项目相关第三方库下载 npm 源配置
+- `.umirc.ts`: umi 框架配置文件，包括antd、theme、locale等
+
+
+
+

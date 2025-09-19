@@ -1,0 +1,124 @@
+---
+description: api 请求规范
+globs: *.vue, *.ts, *.js
+alwaysApply: true
+---
+
+# API设计规范
+
+## RESTful API设计原则
+- 使用名词表示资源，如`/users`而非`/getUsers`
+- 使用HTTP动词表示操作：GET(查询)、POST(创建)、PUT(更新)、DELETE(删除)
+- 使用复数形式命名资源集合，如`/users`而非`/user`
+- 使用嵌套表示资源关系，如`/users/123/orders`
+
+## 请求格式
+- 项目请求统一使用已经封装好的请求工具`src/config/axios/index.ts`
+- GET(查询)、POST(创建)、PUT(更新)、DELETE(删除)等请求，请求参数都使用JSON格式，因为参数在`src/config/axios/index.ts`工具都做了统一的转化处理
+- 支持的内容类型仅为`application/json`
+- 所有的请求方法都作为一个属性，封装在一个大的接口对象中，而不要每个接口都单独导出，看如下代码示例
+
+## 响应格式
+```json
+{
+  "code": 0, // 请求编码，0: 表示请求接口正常，-1: 表示请求接口异常
+  "msg": "请求成功", // 请求返回的文本信息
+  "data": {}, // 响应主体数据
+}
+```
+
+- GET(查询)、POST(创建)、PUT(更新)、DELETE(删除)等请求，后端响应的数据，在`src/config/axios/index.ts`工具统一做了处理，直接返回了 response.data，而没有返回 code 和 msg 字段，所以，页面调用接口拿到的 response，只有 data 字段数据
+- 下载使用`src/config/axios/index.ts`工具的 `download` 方法，接口直接返回 response 数据，而不是 response.data，同时  `download` 方法已经设置了 `responseType: 'blob'`
+
+## 代码示例
+
+```typescript
+import request from '@/config/axios'
+
+// 标书管理 API
+export const TenderApi = {
+
+  /**
+   * 获取自检清单列表
+   * @param docAnalysisId 标书分析ID
+   */
+  getSelfCheckItemList: async (docAnalysisId: string | number) => {
+    return await request.get({
+      url: '/doc/self-check-item/list',
+      params: { docAnalysisId }
+    })
+  },
+
+  /**
+   * 更新文档状态
+   * @param params { sectionId, status }
+   */
+  updateDocumentStatus: async (params: { sectionId: number, status: string }) => {
+    return await request.post({
+      url: '/doc/section/update-status',
+      data: {
+        sectionId: params.sectionId,
+        status: params.status
+      }
+    })
+  },
+
+  /**
+   * 修改标书
+   * @param params { sectionId, status }
+   */
+  updateTender: async (params: { sectionId: number, status: string }) => {
+    return await request.put({
+      url: '/doc/tender/update',
+      data: {
+        sectionId: params.sectionId,
+        status: params.status
+      }
+    })
+  },
+
+  /**
+   * 删除单个附件
+   * @param fileId 文件ID
+   */
+  deleteTenderFile: async (fileId: string | number) => {
+    return await request.delete({
+      url: '/doc/tender-file/delete',
+      params: { fileId }
+    })
+  },
+
+  /**
+   * 上传文件并附加业务类型
+   * @param file 文件对象
+   * @param docAnalysisId 标书ID
+   * @param businessType 文件类型
+   */
+  uploadTenderFileWithType: async (file: File, docAnalysisId: number, businessType: string) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('docAnalysisId', String(docAnalysisId))
+    formData.append('businessType', businessType)
+    return await request.post({
+      url: '/doc/tender-file/upload-and-add',
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+  },
+
+  /**
+   * 下载单个附件
+   * @param id 文件ID
+   */
+  downloadTenderFile: async (id: string | number) => {
+    return await request.download({
+      url: '/doc/tender-file/download',
+      params: { fileId: id },
+    })
+  },
+
+}
+
+```
